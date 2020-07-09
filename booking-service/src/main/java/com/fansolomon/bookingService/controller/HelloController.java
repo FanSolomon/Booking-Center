@@ -1,6 +1,7 @@
-package com.fansolomon.bookingService.web;
+package com.fansolomon.bookingService.controller;
 
 import com.fansolomon.bookingService.model.User;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -17,6 +18,7 @@ public class HelloController {
     @Autowired
     private DiscoveryClient client;
 
+    @ApiOperation(value = "/hello", notes = "")
     @RequestMapping("/hello")
     public String index() throws InterruptedException {
         List<ServiceInstance> instance = client.getInstances("booking-service");
