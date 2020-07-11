@@ -31,12 +31,12 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("foodie-dev接口api")   //文档页标题
+                .title("Booking-Center接口api")   //文档页标题
                 .contact(new Contact("FanSolomon"
                         ,"https://github.com/FanSolomon"
                         ,"jetonlyy@gmail.com")) //联系人信息
-                .description("foodie-dev接口api") //详细信息
-                .version("1.0.1")   //文档版本号
+                .description("Booking-Center接口api") //详细信息
+                .version("1.0.0")   //文档版本号
                 .termsOfServiceUrl("https://github.com/FanSolomon") //网站地址
                 .build();
     }
