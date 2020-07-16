@@ -1,0 +1,5 @@
+FROM java:8
+#VOLUME /tmp
+ADD eureka-server-1.0.0-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
+EXPOSE 1111
