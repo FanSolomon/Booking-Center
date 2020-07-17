@@ -1,5 +1,5 @@
 FROM java:8
 #VOLUME /tmp
-ADD feign-consumer-1.0.0-SNAPSHOT.jar app.jar
+ADD target/feign-consumer-1.0.0-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 EXPOSE 9002
