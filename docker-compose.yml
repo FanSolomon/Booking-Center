@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+
+  eureka-server :
+    image: eureka-server
+    ports:
+      - "1111:1111"
+#    volumes:
+#      - /usr/local/cloud/logs/eureka-server:/logs
+    networks:
+      - my-cloud
+
+  feign-consumer:
+    image: feign-consumer
+    ports:
+      - "9002:9002"
+#    volumes:
+#      - /usr/local/cloud/logs/provider:/logs
+    networks:
+      - my-cloud
+    depends_on:
+      - eureka-server
+
+  api-gateway:
+    image: api-gateway
+    ports:
+      - "5555:5555"
+#    volumes:
+#      - /usr/local/cloud/logs/consumer:/logs
+    networks:
+      - my-cloud
+    depends_on:
+      - eureka-server
+
+  booking-service:
+    image: booking-service
+    ports:
+      - "8080:8080"
+#    volumes:
+#      - /usr/local/cloud/logs/consumer:/logs
+    networks:
+      - my-cloud
+    depends_on:
+      - eureka-server
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: booking_center
+    volumes:
+      - /home/Booking-Center/mysqlData:/var/lib/mysql
+    networks:
+      - my-cloud
+
+networks:
+  my-cloud:
+    driver: bridge
