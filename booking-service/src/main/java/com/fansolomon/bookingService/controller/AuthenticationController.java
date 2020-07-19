@@ -43,7 +43,6 @@ public class AuthenticationController {
             log.info("当前的请求：{}", targetUrl);
         }
         return new ResultDTO(ErrorConstants.AUTHENTICATION_FAILURE_CODE, ErrorConstants.AUTHENTICATION_FAILURE_MESSAGE);
-        // TODO 前端待进行统一错误捕获并跳转
     }
 
 }

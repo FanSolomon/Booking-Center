@@ -91,7 +91,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
-		ValidateCodeType type = getValidateCodeType(request);
+		/*ValidateCodeType type = getValidateCodeType(request);
 		if (type != null) {
 			logger.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
 			try {
@@ -102,7 +102,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 				authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
 				return;
 			}
-		}
+		}*/
 
 		chain.doFilter(request, response);
 
