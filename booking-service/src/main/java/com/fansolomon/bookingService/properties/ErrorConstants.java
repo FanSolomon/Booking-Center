@@ -14,5 +14,11 @@ public interface ErrorConstants {
     String TOKEN_NOT_EXIST_CODE = "0001";
     String TOKEN_NOT_EXIST_MESSAGE = "请求头中token不存在";
 
+    String LOGIN_PARAM_ERROR_CODE = "0002";
+    String LOGIN_PARAM_ERROR_MESSAGE = "登录参数异常";
+
+    String USER_NOT_FOUND_CODE = "0003";
+    String USER_NOT_FOUND_MESSAGE = "用户不存在";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }
