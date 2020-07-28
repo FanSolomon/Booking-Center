@@ -20,6 +20,7 @@ public class ResultDTO<T> implements Serializable {
     private String errorMsg;
 
     public ResultDTO() {
+        this.success = true;
     }
 
     public ResultDTO(T data) {

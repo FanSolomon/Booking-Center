@@ -1,5 +1,6 @@
 package com.fansolomon.bookingService.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +24,9 @@ import java.time.LocalDateTime;
 public class BcUser implements Serializable {
 
     private static final long serialVersionUID = 31492452026783032L;
+
+    @TableId
+    private String id;
 
     @ApiModelProperty(value = "用户名")
     private String username;

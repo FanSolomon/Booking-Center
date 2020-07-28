@@ -1,6 +1,7 @@
 package com.fansolomon.bookingService.config;
 
 import com.fansolomon.bookingService.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.fansolomon.bookingService.filter.TokenCheckFilter;
 import com.fansolomon.bookingService.properties.BcServiceConstants;
 import com.fansolomon.bookingService.properties.SecurityProperties;
 import com.fansolomon.bookingService.validate.code.ValidateCodeSecurityConfig;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -38,6 +41,9 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
+    private TokenCheckFilter tokenCheckFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -69,6 +75,7 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
             //将validateCodeFilter加在UsernamePasswordAuthenticationFilter之前
 //			.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
             //身份认证：表单登录 任何请求都需要身份认证
+            .addFilterBefore(tokenCheckFilter, AbstractPreAuthenticatedProcessingFilter.class)
             .rememberMe()
             .tokenRepository(persistentTokenRepository())
             .tokenValiditySeconds(securityProperties.getBcService().getRememberMeSeconds())

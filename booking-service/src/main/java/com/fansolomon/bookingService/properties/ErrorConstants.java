@@ -20,5 +20,8 @@ public interface ErrorConstants {
     String USER_NOT_FOUND_CODE = "0003";
     String USER_NOT_FOUND_MESSAGE = "用户不存在";
 
+    String USER_REGISTER_ERROR_CODE = "0004";
+    String USER_REGISTER_ERROR_MESSAGE = "用户注册出错";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }

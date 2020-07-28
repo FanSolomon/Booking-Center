@@ -1,6 +1,7 @@
 package com.fansolomon.bookingService.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.fansolomon.bookingCommon.utils.SnowFlake;
 import com.fansolomon.bookingService.entity.BcUser;
 import com.fansolomon.bookingService.entity.dto.ResultDTO;
 import com.fansolomon.bookingService.entity.param.LoginParam;
@@ -10,9 +11,14 @@ import com.fansolomon.bookingService.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Map;
+
+import static com.baomidou.mybatisplus.extension.toolkit.SqlHelper.retBool;
 
 @Slf4j
 @Service
@@ -20,6 +26,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private BcUserMapper bcUserMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SnowFlake snowFlake;
 
     @Override
     public ResultDTO<Map<String, String>> login(LoginParam loginParam) {
@@ -40,6 +52,35 @@ public class AuthServiceImpl implements AuthService {
 
         // TODO 获取token，token放redis
         return null;
+    }
+
+    @Override
+    @Transactional
+    public ResultDTO register(LoginParam loginParam) {
+        log.info("用户注册开始,Username:{}", loginParam.getUsername());
+        boolean result = false;
+        String password = loginParam.getPassword();
+        BcUser bcUser = new BcUser();
+        bcUser.setUsername(loginParam.getUsername());
+        bcUser.setEmail(loginParam.getEmail());
+        bcUser.setSex(2);
+        bcUser.setCreatedTime(LocalDateTime.now());
+        bcUser.setLoginCount(0);
+        try {
+            String encodePassword = passwordEncoder.encode(password);
+            String id = Long.toString(snowFlake.nextId());
+            bcUser.setId(id);
+            bcUser.setPassword(encodePassword);
+            log.info("原密码:{},加密后:{}", password, encodePassword);
+            result = retBool(bcUserMapper.insert(bcUser));
+            log.info("用户注册完成,id:{}", id);
+        } catch (Exception e) {
+            log.info("用户注册出错{}", e.getMessage());
+            return new ResultDTO<>(ErrorConstants.USER_REGISTER_ERROR_CODE, ErrorConstants.USER_REGISTER_ERROR_MESSAGE);
+        }
+        ResultDTO resultDTO = result ? new ResultDTO<>() : new ResultDTO<>(ErrorConstants.USER_REGISTER_ERROR_CODE,
+                ErrorConstants.USER_REGISTER_ERROR_MESSAGE);
+        return resultDTO;
     }
 
     /**

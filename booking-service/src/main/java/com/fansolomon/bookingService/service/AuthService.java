@@ -8,4 +8,6 @@ import java.util.Map;
 public interface AuthService {
 
     ResultDTO<Map<String, String>> login(LoginParam loginParam);
+
+    ResultDTO register(LoginParam loginParam);
 }
