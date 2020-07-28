@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @SpringBootApplication
 @MapperScan("com.fansolomon.bookingService.mapper")
-@ComponentScan("com.fansolomon.bookingCommon")
+@ComponentScan("com.fansolomon")
 public class BookingServiceApplication {
 
     public static void main(String[] args) {
