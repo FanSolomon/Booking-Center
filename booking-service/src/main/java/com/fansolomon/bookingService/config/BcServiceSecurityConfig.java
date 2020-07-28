@@ -84,7 +84,8 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
             .authorizeRequests()
             .antMatchers(BcServiceConstants.DEFAULT_UNAUTHENTICATION_URL,
                     BcServiceConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                    BcServiceConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*").permitAll()
+                    BcServiceConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                    "/auth/*").permitAll()
             .anyRequest()
             .authenticated()
             //暂时关闭csrf 跨站请求伪造防护功能

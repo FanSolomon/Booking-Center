@@ -66,6 +66,7 @@ public class AuthServiceImpl implements AuthService {
         bcUser.setSex(2);
         bcUser.setCreatedTime(LocalDateTime.now());
         bcUser.setLoginCount(0);
+        bcUser.setAvatarPath("default.jpg");
         try {
             String encodePassword = passwordEncoder.encode(password);
             String id = Long.toString(snowFlake.nextId());
