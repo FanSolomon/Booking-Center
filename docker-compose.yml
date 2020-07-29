@@ -43,6 +43,9 @@ services:
       - my-cloud
     depends_on:
       - eureka-server
+      - api-gateway
+      - feign-consumer
+      - mysql
 
   mysql:
     image: mysql
