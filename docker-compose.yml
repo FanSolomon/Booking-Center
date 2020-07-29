@@ -46,6 +46,7 @@ services:
       - api-gateway
       - feign-consumer
       - mysql
+      - redis
 
   mysql:
     image: mysql
@@ -56,6 +57,18 @@ services:
       MYSQL_DATABASE: booking_center
     volumes:
       - /home/Booking-Center/mysqlData:/var/lib/mysql
+    networks:
+      - my-cloud
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/Booking-Center/redisConf:/usr/local/etc/redis
+      - /home/Booking-Center/redisData:/data
+    command:
+      redis-server
     networks:
       - my-cloud
 
