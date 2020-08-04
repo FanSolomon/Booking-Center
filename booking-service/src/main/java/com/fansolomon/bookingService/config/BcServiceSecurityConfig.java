@@ -8,7 +8,9 @@ import com.fansolomon.bookingService.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,7 @@ import javax.sql.DataSource;
  */
 //web应用安全配置的适配器
 @Configuration
+@EnableWebSecurity
 public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
@@ -85,11 +88,23 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
             .antMatchers(BcServiceConstants.DEFAULT_UNAUTHENTICATION_URL,
                     BcServiceConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                     BcServiceConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                    "/auth/*").permitAll()
+                    "/auth/*", "/oauth/token").permitAll()
             .anyRequest()
             .authenticated()
             //暂时关闭csrf 跨站请求伪造防护功能
             .and().csrf().disable();
 
+    }
+
+    /**
+     * 需要配置这个支持password模式 support password grant type
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
