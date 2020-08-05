@@ -1,4 +1,4 @@
-package com.fansolomon.bookingService.service;
+package com.fansolomon.oauthServer.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fansolomon.bookingCommon.entity.BcUser;

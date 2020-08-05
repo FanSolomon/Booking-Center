@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.fansolomon.bookingService.mapper")
+@MapperScan({"com.fansolomon.bookingService.mapper", "com.fansolomon.bookingCommon.mapper"})
 public class MybatisPlusConfig {
 
     @Bean

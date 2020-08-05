@@ -1,8 +1,8 @@
-package com.fansolomon.bookingService.authentication;
+package com.fansolomon.oauthServer.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fansolomon.bookingCommon.entity.BcUser;
-import com.fansolomon.bookingService.service.IBcUserService;
+import com.fansolomon.oauthServer.service.IBcUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

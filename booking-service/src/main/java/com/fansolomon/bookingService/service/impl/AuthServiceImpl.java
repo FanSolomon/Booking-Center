@@ -1,16 +1,17 @@
 package com.fansolomon.bookingService.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.fansolomon.bookingCommon.entity.BcUser;
+import com.fansolomon.bookingCommon.mapper.BcUserMapper;
 import com.fansolomon.bookingCommon.utils.SnowFlake;
-import com.fansolomon.bookingService.entity.BcUser;
 import com.fansolomon.bookingService.entity.dto.ResultDTO;
 import com.fansolomon.bookingService.entity.param.LoginParam;
-import com.fansolomon.bookingService.mapper.BcUserMapper;
 import com.fansolomon.bookingService.properties.ErrorConstants;
 import com.fansolomon.bookingService.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
             return new ResultDTO<>(ErrorConstants.USER_NOT_FOUND_CODE, ErrorConstants.USER_NOT_FOUND_MESSAGE);
         }
 
+        log.info("{} is:{},{}", password, new BCryptPasswordEncoder().encode(password), passwordEncoder.encode(password));
         // 校验密码
 
 

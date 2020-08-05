@@ -1,4 +1,4 @@
-package com.fansolomon.bookingService.config;
+package com.fansolomon.oauthServer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.fansolomon.bookingService.entity;
+package com.fansolomon.bookingCommon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;

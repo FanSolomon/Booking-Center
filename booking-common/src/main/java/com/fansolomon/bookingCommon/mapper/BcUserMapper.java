@@ -1,7 +1,7 @@
-package com.fansolomon.bookingService.mapper;
+package com.fansolomon.bookingCommon.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fansolomon.bookingService.entity.BcUser;
+import com.fansolomon.bookingCommon.entity.BcUser;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,9 +1,9 @@
-package com.fansolomon.bookingService.service.impl;
+package com.fansolomon.oauthServer.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fansolomon.bookingCommon.entity.BcUser;
 import com.fansolomon.bookingCommon.mapper.BcUserMapper;
-import com.fansolomon.bookingService.service.IBcUserService;
+import com.fansolomon.oauthServer.service.IBcUserService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -48,6 +48,20 @@ services:
       - mysql
       - redis
 
+  oauth-server:
+    image: oauth-server
+    ports:
+      - "8090:8090"
+    #    volumes:
+    #      - /usr/local/cloud/logs/consumer:/logs
+    networks:
+      - my-cloud
+    depends_on:
+      - eureka-server
+      - api-gateway
+      - feign-consumer
+      - mysql
+
   mysql:
     image: mysql
     ports:
