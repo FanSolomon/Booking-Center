@@ -57,7 +57,8 @@ public class TokenCheckFilter extends OncePerRequestFilter implements Initializi
             log.info("token exist, start to check token");
             Jwt tokenMessage = JwtHelper.decode(token);
             JSONObject tokenObject = JSONObject.parseObject(tokenMessage.getClaims());
-            String userId = (String) tokenObject.get("user_id");
+            String userName = (String) tokenObject.get("user_name");
+            String creatTime = (String) tokenObject.get("creatTime");
             // TODO 取redis进行比对
         } else {
             log.info("Bearer token not found");

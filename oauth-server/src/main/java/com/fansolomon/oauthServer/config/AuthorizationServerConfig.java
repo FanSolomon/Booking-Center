@@ -34,8 +34,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
-    @Autowired
-    private TokenEnhancer tokenEnhancer;
+    @Autowired(required = false)
+    private TokenEnhancer jwtTokenEnhancer;
 
     @Autowired
     private AuthenticationManager authenticationManagerBean;
@@ -61,7 +61,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
         // 自定义jwt生成token方式(不用这种方式可以注释)
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer, jwtAccessTokenConverter));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
         endpoints.tokenEnhancer(tokenEnhancerChain);
 
         // 配置TokenServices参数
