@@ -6,8 +6,8 @@ services:
     image: eureka-server
     ports:
       - "1111:1111"
-#    volumes:
-#      - /usr/local/cloud/logs/eureka-server:/logs
+    volumes:
+      - /home/Booking-Center/logs/eureka-server:/home/logs
     networks:
       - my-cloud
 
@@ -15,8 +15,8 @@ services:
     image: feign-consumer
     ports:
       - "9002:9002"
-#    volumes:
-#      - /usr/local/cloud/logs/provider:/logs
+    volumes:
+      - /home/Booking-Center/logs/feign-consumer:/home/logs
     networks:
       - my-cloud
     depends_on:
@@ -26,8 +26,8 @@ services:
     image: api-gateway
     ports:
       - "5555:5555"
-#    volumes:
-#      - /usr/local/cloud/logs/consumer:/logs
+    volumes:
+      - /home/Booking-Center/logs/api-gateway:/home/logs
     networks:
       - my-cloud
     depends_on:
@@ -37,8 +37,8 @@ services:
     image: booking-service
     ports:
       - "8080:8080"
-#    volumes:
-#      - /usr/local/cloud/logs/consumer:/logs
+    volumes:
+      - /home/Booking-Center/logs/booking-service:/home/logs
     networks:
       - my-cloud
     depends_on:
@@ -52,8 +52,8 @@ services:
     image: oauth-server
     ports:
       - "8090:8090"
-    #    volumes:
-    #      - /usr/local/cloud/logs/consumer:/logs
+        volumes:
+          - /home/Booking-Center/logs/oauth-server:/home/logs
     networks:
       - my-cloud
     depends_on:
