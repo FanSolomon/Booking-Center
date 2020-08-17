@@ -52,8 +52,8 @@ services:
     image: oauth-server
     ports:
       - "8090:8090"
-        volumes:
-          - /home/Booking-Center/logs/oauth-server:/home/logs
+    volumes:
+      - /home/Booking-Center/logs/oauth-server:/home/logs
     networks:
       - my-cloud
     depends_on:
