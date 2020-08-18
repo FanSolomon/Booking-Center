@@ -26,5 +26,8 @@ public interface ErrorConstants {
     String GET_OAUTH_TOKEN_ERROR_CODE = "0005";
     String GET_OAUTH_TOKEN_ERROR_MESSAGE = "获取token失败";
 
+    String WRONG_USERNAME_OR_PASSWORD_CODE = "0006";
+    String WRONG_USERNAME_OR_PASSWORD_MESSAGE = "用户名或密码错误";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }

@@ -11,10 +11,10 @@ import com.fansolomon.bookingService.feign.OauthService;
 import com.fansolomon.bookingService.properties.BcServiceConstants;
 import com.fansolomon.bookingService.properties.ErrorConstants;
 import com.fansolomon.bookingService.service.AuthService;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,10 @@ import java.util.Map;
 
 import static com.baomidou.mybatisplus.extension.toolkit.SqlHelper.retBool;
 
+/**
+ * @author zhangyuting
+ * @since 2020-7-22
+ */
 @Slf4j
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -57,16 +61,23 @@ public class AuthServiceImpl implements AuthService {
             return new ResultDTO<>(ErrorConstants.USER_NOT_FOUND_CODE, ErrorConstants.USER_NOT_FOUND_MESSAGE);
         }
 
-        log.info("{} is:{},{}", password, new BCryptPasswordEncoder().encode(password), passwordEncoder.encode(password));
+        Map<String, String> tokenInfo = null;
+        try {
+            tokenInfo = oauthService.getOauthToken("password", "all", bcUser.getUsername(), password);
+        } catch (FeignException.BadRequest e) {
+            log.info("获取tokenInfo失败，失败信息:{}", e.getMessage());
+            return new ResultDTO<>(ErrorConstants.WRONG_USERNAME_OR_PASSWORD_CODE, ErrorConstants.WRONG_USERNAME_OR_PASSWORD_MESSAGE);
+        }
 
-        Map<String, String> tokenInfo = oauthService.getOauthToken("password"
-                , "all", bcUser.getUsername(), password);
         if (tokenInfo == null) {
+            log.info("获取tokenInfo失败");
             return new ResultDTO<>(ErrorConstants.GET_OAUTH_TOKEN_ERROR_CODE, ErrorConstants.GET_OAUTH_TOKEN_ERROR_MESSAGE);
         }
 
         // 将refresh_token存入redis
-        redisUtil.set(bcUser.getUsername(), tokenInfo.get("refresh_token"), BcServiceConstants.REFRESH_TOKEN_VALIDITY);
+        if (StringUtils.isNotBlank(tokenInfo.get("refresh_token"))) {
+            redisUtil.set("token:" + bcUser.getUsername(), tokenInfo.get("refresh_token"), BcServiceConstants.REFRESH_TOKEN_VALIDITY);
+        }
 
         tokenInfo.remove("refresh_token");
         tokenInfo.remove("jti");

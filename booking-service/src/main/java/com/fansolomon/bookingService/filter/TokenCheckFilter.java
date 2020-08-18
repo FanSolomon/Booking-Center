@@ -59,7 +59,7 @@ public class TokenCheckFilter extends OncePerRequestFilter implements Initializi
             JSONObject tokenObject = JSONObject.parseObject(tokenMessage.getClaims());
             String userName = (String) tokenObject.get("user_name");
             String creatTime = (String) tokenObject.get("creatTime");
-            // TODO 取redis进行比对
+            log.info("tokenInfo:userName:{}, creatTime:{}", userName, creatTime);
         } else {
             log.info("Bearer token not found");
             ResultDTO resultDTO = new ResultDTO(ErrorConstants.TOKEN_NOT_EXIST_CODE, ErrorConstants.TOKEN_NOT_EXIST_MESSAGE);
