@@ -23,5 +23,8 @@ public interface ErrorConstants {
     String USER_REGISTER_ERROR_CODE = "0004";
     String USER_REGISTER_ERROR_MESSAGE = "用户注册出错";
 
+    String GET_OAUTH_TOKEN_ERROR_CODE = "0005";
+    String GET_OAUTH_TOKEN_ERROR_MESSAGE = "获取token失败";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }

@@ -3,9 +3,12 @@ package com.fansolomon.bookingService.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fansolomon.bookingCommon.entity.BcUser;
 import com.fansolomon.bookingCommon.mapper.BcUserMapper;
+import com.fansolomon.bookingCommon.utils.RedisUtil;
 import com.fansolomon.bookingCommon.utils.SnowFlake;
 import com.fansolomon.bookingService.entity.dto.ResultDTO;
 import com.fansolomon.bookingService.entity.param.LoginParam;
+import com.fansolomon.bookingService.feign.OauthService;
+import com.fansolomon.bookingService.properties.BcServiceConstants;
 import com.fansolomon.bookingService.properties.ErrorConstants;
 import com.fansolomon.bookingService.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +37,15 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private SnowFlake snowFlake;
 
+    @Autowired
+    private OauthService oauthService;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public ResultDTO<Map<String, String>> login(LoginParam loginParam) {
-        ResultDTO<Map<String, String>> resultDTO;
+        ResultDTO<Map<String, String>> resultDTO = new ResultDTO<>();
         String password = loginParam.getPassword();
         String username = loginParam.getUsername();
         String email = loginParam.getEmail();
@@ -49,11 +58,20 @@ public class AuthServiceImpl implements AuthService {
         }
 
         log.info("{} is:{},{}", password, new BCryptPasswordEncoder().encode(password), passwordEncoder.encode(password));
-        // 校验密码
 
+        Map<String, String> tokenInfo = oauthService.getOauthToken("password"
+                , "all", bcUser.getUsername(), password);
+        if (tokenInfo == null) {
+            return new ResultDTO<>(ErrorConstants.GET_OAUTH_TOKEN_ERROR_CODE, ErrorConstants.GET_OAUTH_TOKEN_ERROR_MESSAGE);
+        }
 
-        // TODO 获取token，token放redis
-        return null;
+        // 将refresh_token存入redis
+        redisUtil.set(bcUser.getUsername(), tokenInfo.get("refresh_token"), BcServiceConstants.REFRESH_TOKEN_VALIDITY);
+
+        tokenInfo.remove("refresh_token");
+        tokenInfo.remove("jti");
+        resultDTO.setData(tokenInfo);
+        return resultDTO;
     }
 
     @Override

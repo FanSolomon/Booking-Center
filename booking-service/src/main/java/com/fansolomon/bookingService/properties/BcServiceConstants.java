@@ -39,4 +39,9 @@ public interface BcServiceConstants {
      * 验证短信验证码时，http请求中默认的携带短信验证码信息的参数的名称
      */
     String DEFAULT_PARAMETER_NAME_CODE_SMS = "smsCode";
+
+    /**
+     * refresh_token的有效时间
+     */
+    long REFRESH_TOKEN_VALIDITY = 28800000L;
 }
