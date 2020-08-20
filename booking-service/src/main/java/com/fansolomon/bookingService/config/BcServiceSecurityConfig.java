@@ -1,8 +1,8 @@
 package com.fansolomon.bookingService.config;
 
 import com.fansolomon.bookingService.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.fansolomon.bookingService.authorize.AuthorizeConfigManager;
 import com.fansolomon.bookingService.filter.TokenCheckFilter;
-import com.fansolomon.bookingService.properties.BcServiceConstants;
 import com.fansolomon.bookingService.properties.SecurityProperties;
 import com.fansolomon.bookingService.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -49,6 +47,9 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private TokenCheckFilter tokenCheckFilter;
+
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -113,16 +114,10 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
             .tokenValiditySeconds(securityProperties.getBcService().getRememberMeSeconds())
             .userDetailsService(userDetailsService)
 //		http.httpBasic()
-            .and()
-            .authorizeRequests()
-            .antMatchers(BcServiceConstants.DEFAULT_UNAUTHENTICATION_URL,
-                    BcServiceConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                    BcServiceConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                    "/auth/*", "/oauth/*").permitAll()
-            .anyRequest()
-            .authenticated()
             //暂时关闭csrf 跨站请求伪造防护功能
             .and().csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
 
     }
 }
