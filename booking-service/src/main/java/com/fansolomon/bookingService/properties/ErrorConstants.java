@@ -29,5 +29,11 @@ public interface ErrorConstants {
     String WRONG_USERNAME_OR_PASSWORD_CODE = "0006";
     String WRONG_USERNAME_OR_PASSWORD_MESSAGE = "用户名或密码错误";
 
+    String ACCESS_TOKEN_EXPIRED_CODE = "0007";
+    String ACCESS_TOKEN_EXPIRED_MESSAGE = "token失效";
+
+    String INVALID_ACCESS_TOKEN_CODE = "0008";
+    String INVALID_ACCESS_TOKEN_MESSAGE = "token校验异常";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }

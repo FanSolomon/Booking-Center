@@ -22,10 +22,10 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import javax.sql.DataSource;
 
 /**
+ * web应用安全配置的适配器
  * @author colin
  * @since 2020-07-11
  */
-//web应用安全配置的适配器
 @Configuration
 @EnableResourceServer
 public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
@@ -93,6 +93,8 @@ public class BcServiceSecurityConfig extends AbstractChannelSecurityConfig {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore());
+        // 自定义Token校验异常处理
+        resources.authenticationEntryPoint(new AuthExceptionEntryPoint());
     }
 
     @Override
