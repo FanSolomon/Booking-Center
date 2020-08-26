@@ -35,5 +35,11 @@ public interface ErrorConstants {
     String INVALID_ACCESS_TOKEN_CODE = "0008";
     String INVALID_ACCESS_TOKEN_MESSAGE = "token校验异常";
 
+    String REFRESH_TOKEN_ERROR_CODE = "0009";
+    String REFRESH_TOKEN_ERROR_MESSAGE = "刷新token失败";
+
+    String ACCESS_TOKEN_ERROR_CODE = "0010";
+    String ACCESS_TOKEN_ERROR_MESSAGE = "access_token比对失败";
+
     // =========================校验权限部分错误码 0000~0099 end=========================
 }

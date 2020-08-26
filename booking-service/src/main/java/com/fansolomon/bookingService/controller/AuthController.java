@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -41,5 +42,11 @@ public class AuthController {
 //    @RequestMapping("/register")
     public ResultDTO register(@RequestBody @Validated LoginParam loginParam) {
         return authService.register(loginParam);
+    }
+
+    @ApiOperation("刷新token")
+    @RequestMapping("/refreshToken")
+    public ResultDTO<Map<String, String>> refreshToken(@RequestParam("token") String token) {
+        return authService.refreshToken(token);
     }
 }

@@ -10,4 +10,6 @@ public interface AuthService {
     ResultDTO<Map<String, String>> login(LoginParam loginParam);
 
     ResultDTO register(LoginParam loginParam);
+
+    ResultDTO<Map<String, String>> refreshToken(String token);
 }

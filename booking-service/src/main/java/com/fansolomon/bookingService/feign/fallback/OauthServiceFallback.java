@@ -18,4 +18,9 @@ public class OauthServiceFallback implements OauthService {
     public Map<String, String> getOauthToken(String grantType, String scope, String username, String password) {
         return null;
     }
+
+    @Override
+    public Map<String, String> refreshOauthToken(String grantType, String refreshToken) {
+        return null;
+    }
 }

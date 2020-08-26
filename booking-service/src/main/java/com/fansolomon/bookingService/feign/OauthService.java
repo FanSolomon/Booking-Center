@@ -19,4 +19,7 @@ public interface OauthService {
     @RequestMapping(value = "/oauth/token", method = RequestMethod.POST, headers = {"Content-Type: application/x-www-form-urlencoded", "Authorization=Basic b2F1dGgtc2VydmVyOm9hdXRoU2VjcmV0"})
     Map<String, String> getOauthToken(@RequestParam("grant_type") String grantType, @RequestParam("scope") String scope
             , @RequestParam("username") String username, @RequestParam("password") String password);
+
+    @RequestMapping(value = "/oauth/token", method = RequestMethod.POST, headers = {"Content-Type: application/x-www-form-urlencoded", "Authorization=Basic b2F1dGgtc2VydmVyOm9hdXRoU2VjcmV0"})
+    Map<String, String> refreshOauthToken(@RequestParam("grant_type") String grantType, @RequestParam("refresh_token") String refreshToken);
 }
