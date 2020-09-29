@@ -1,4 +1,4 @@
-package com.fansolomon.bookingService.controller;
+package com.fansolomon.bookingService.authController;
 
 import com.fansolomon.bookingService.entity.dto.ResultDTO;
 import com.fansolomon.bookingService.properties.ErrorConstants;

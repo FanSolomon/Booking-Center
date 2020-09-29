@@ -36,7 +36,7 @@ public class RequestAspect {
 	 * 第五处 * 代表类中的方法名 （）指每个方法的参数 ..代表方法中的任何参数
 	 */
 	//pjp对象包含当前拦截方法的信息
-	@Around("execution(* com.fansolomon.bookingService.controller..*.*(..))")
+	@Around("execution(* com.fansolomon.bookingService.authController..*.*(..))")
 	private Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
 		long start = new Date().getTime();
 		log.info("-----controller aspect start!-----");

@@ -41,6 +41,10 @@ public class TokenCheckFilter extends OncePerRequestFilter implements Initializi
         if (StringUtils.isNotBlank(outOfFilterUri)) {
             String[] outOfFilterUriArr = outOfFilterUri.split(";");
             for (String uri : outOfFilterUriArr) {
+                if ("/**".equals(uri)) {
+                    chain.doFilter(request, response);
+                    return;
+                }
                 if (requestUrl.startsWith(uri)) {
                     log.info("requestUrl {} is outOfFilterUri", requestUrl);
                     chain.doFilter(request, response);

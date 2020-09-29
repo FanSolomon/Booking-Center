@@ -1,4 +1,4 @@
-package com.fansolomon.bookingService.controller;
+package com.fansolomon.bookingService.authController;
 
 import com.fansolomon.bookingService.properties.BcServiceConstants;
 import com.fansolomon.bookingService.validate.code.ValidateCodeProcessor;
